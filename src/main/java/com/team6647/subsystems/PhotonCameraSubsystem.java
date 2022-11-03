@@ -63,8 +63,7 @@ public class PhotonCameraSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-  }
+  public void periodic() {}
 
   public void toggleAim() {
     aiming = !aiming;
