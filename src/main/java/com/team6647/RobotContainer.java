@@ -5,14 +5,22 @@ package com.team6647;
 // the WPILib BSD license file in the root directory of this project.
 
 import com.team6647.subsystems.ChassisSubsystem;
+import com.team6647.subsystems.PhotonCameraSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
+
 import com.team6647.Constants.OIConstants;
 import com.team6647.utils.XboxControllerUpgrade;
 
+import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 public class RobotContainer {
         public final ChassisSubsystem chassis = new ChassisSubsystem();
+
+        public final PhotonCameraSubsystem photonCam = new PhotonCameraSubsystem("photonvision", chassis);
 
         private final XboxControllerUpgrade joystick1 = new XboxControllerUpgrade(OIConstants.KDriverControllerPort,
                         0.2);
@@ -65,6 +73,10 @@ public class RobotContainer {
         }
 
         private void configureButtonBindings() {
+                new JoystickButton(joystick1, Button.kLeftBumper.value)
+                                .whileHeld(new StartEndCommand(() -> photonCam.toggleAim(), () -> photonCam.toggleAim(),
+                                                photonCam));
+
         }
 
         /* Returns auto chosser selection */
