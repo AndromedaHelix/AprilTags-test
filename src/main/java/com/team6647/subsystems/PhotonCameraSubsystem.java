@@ -26,7 +26,6 @@ public class PhotonCameraSubsystem extends SubsystemBase {
 
   PIDController turnController = new PIDController(0.1, 0, 0);
 
-  /** Creates a new PhotonCameraSubsystem. */
   public PhotonCameraSubsystem(String name, ChassisSubsystem chassis) {
     camera = new PhotonCamera(name);
     notifier = new Notifier(() -> {
