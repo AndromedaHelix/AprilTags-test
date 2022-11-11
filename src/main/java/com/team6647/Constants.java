@@ -29,7 +29,7 @@ public final class Constants {
         public static final double targetHeight = Units.inchesToMeters(65); // TODO modify
         public static final double cameraPitch = Units.degreesToRadians(0);
 
-        public static final double goalRange = Units.feetToMeters(3);
+        public static final double goalRange = Units.inchesToMeters(65);
     }
 
     public static final class DriveConstants {

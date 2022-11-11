@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
         public final ChassisSubsystem chassis = new ChassisSubsystem();
 
-        public final PhotonCameraSubsystem photonCam = new PhotonCameraSubsystem("photonvision", chassis);
+        public final PhotonCameraSubsystem photonCam = new PhotonCameraSubsystem("arducam", chassis);
 
         private final XboxControllerUpgrade joystick1 = new XboxControllerUpgrade(OIConstants.KDriverControllerPort,
                         0.2);
@@ -81,7 +81,8 @@ public class RobotContainer {
 
         /* Returns auto chosser selection */
         public Command getAutonomousCommand() {
-                return null;
+                return new StartEndCommand(() -> photonCam.toggleAim(), () -> photonCam.toggleAim(),
+                                photonCam);
         }
 
         /* Returns chooser selection */
