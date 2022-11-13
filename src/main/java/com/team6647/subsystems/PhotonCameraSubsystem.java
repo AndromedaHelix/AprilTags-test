@@ -38,7 +38,7 @@ public class PhotonCameraSubsystem extends SubsystemBase {
     notifier = new Notifier(() -> {
       synchronized (lock) {
         if (firstRun) {
-          Thread.currentThread().setName("photonvision"); // TODO adjust camera name
+          Thread.currentThread().setName("photonvision");
           Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
           firstRun = false;
         }
