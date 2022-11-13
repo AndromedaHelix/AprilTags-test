@@ -57,21 +57,25 @@ public class PhotonCameraSubsystem extends SubsystemBase {
 
           var result = camera.getLatestResult();
 
-          System.out.println(result);
-
           // ONLY GETS DISTANCE
           double range = PhotonUtils.calculateDistanceToTargetMeters(VisionConstats.cameraHeight,
               VisionConstats.targetHeight, VisionConstats.cameraPitch,
               Units.degreesToRadians(result.getBestTarget().getPitch()));
 
-          // Calculates the PID
+          // Calculates the PID for the forward and turn 
           double forwardSpeed = -forwardController.calculate(range, VisionConstats.goalRange);
-
           double rotationSpeed = -turnController.calculate(result.getBestTarget().getPitch(), 0);
 
-          System.out.println(forwardSpeed);
-          System.out.println(rotationSpeed);
-          chassis.tankDrive(forwardSpeed + rotationSpeed, -(forwardSpeed - rotationSpeed));
+          double leftSpeed = forwardSpeed + rotationSpeed;
+          double rightSpeed = forwardSpeed - rotationSpeed;
+
+          SmartDashboard.putNumber("Forward Speed:", forwardSpeed);
+          SmartDashboard.putNumber("Rotation Speed:", rotationSpeed);
+
+          SmartDashboard.putNumber("Left Motor input speed", leftSpeed);
+          SmartDashboard.putNumber("Right Motor input speed", rightSpeed);
+
+          chassis.tankDrive(leftSpeed, -rightSpeed);
         }
       }
     });
@@ -80,40 +84,7 @@ public class PhotonCameraSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    /*
-     * SmartDashboard.putBoolean("Aiming:", aiming);
-     * if (!aiming)
-     * return;
-     * boolean hasTargets = camera.getLatestResult().hasTargets();
-     * SmartDashboard.putBoolean("HasTargets:", hasTargets);
-     * if (!hasTargets) {
-     * System.out.println("HAS NO TARGETS ");
-     * return;
-     * }
-     * 
-     * var result = camera.getLatestResult();
-     * 
-     * System.out.println(result);
-     * 
-     * // ONLY GETS DISTANCE
-     * double range =
-     * PhotonUtils.calculateDistanceToTargetMeters(VisionConstats.cameraHeight,
-     * VisionConstats.targetHeight, VisionConstats.cameraPitch,
-     * Units.degreesToRadians(result.getBestTarget().getPitch()));
-     * 
-     * // Calculates the PID
-     * double forwardSpeed = -forwardController.calculate(range,
-     * VisionConstats.goalRange);
-     * 
-     * double rotationSpeed =
-     * -turnController.calculate(result.getBestTarget().getPitch(), 0);
-     * 
-     * System.out.println(forwardSpeed);
-     * System.out.println(rotationSpeed);
-     * chassis.arcadeDrive(forwardSpeed, rotationSpeed);
-     */
-  }
+  public void periodic() {}
 
   public void toggleAim() {
     aiming = !aiming;
